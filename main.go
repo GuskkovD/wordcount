@@ -3,21 +3,15 @@
 package main
 
 import (
-	"bufio"
-	"errors"
 	"fmt"
 	"os"
 	"strings"
 )
 
 func main() {
-	src, err := readInput()
-	if err != nil {
-		fail(err)
-	}
-	words := countWords(src)
+	str := getInputString()
+	words := countWords(str)
 	fmt.Println(words)
-	fmt.Scanf("h")
 }
 
 // match returns true if src matches pattern,
@@ -27,18 +21,13 @@ func countWords(src string) int {
 	return len(buf)
 }
 
-// readInput reads pattern and source string
-// from command line arguments and returns them.
-func readInput() (src string, err error) {
-	reader := bufio.NewReader(os.Stdin)
-	src, err = reader.ReadString('\n')
-	if err != nil {
-		fail(err)
+func getInputString() string {
+	input := ""
+	if len(os.Args) > 1 {
+		input = os.Args[1]
 	}
-	if src == "" {
-		return src, errors.New("missing string")
-	}
-	return src, nil
+
+	return input
 }
 
 // fail prints the error and exits.
